@@ -22,16 +22,16 @@ import com.hp.hpl.jena.rdf.model.Statement;
 public class ProvenanceBundle {
 	
 	private OntModel prov;
-	private String NAMESPACE;
+	private String namespace;
 	private Tracker tracker;
 	
 	// Namespaces
-	private String RDF_NS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-	private String PROV_NS = "http://www.w3.org/ns/prov#";
+	private static final String RDF_NS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+	private static final String PROV_NS = "http://www.w3.org/ns/prov#";
 	
 	public ProvenanceBundle(String ns)
 	{
-		NAMESPACE = ns;
+		namespace = ns;
 		prov = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM);
 		tracker = new Tracker();
 		
@@ -47,10 +47,7 @@ public class ProvenanceBundle {
 	 */
 	public String createEntity()
 	{
-		String uri = NAMESPACE + UUID.randomUUID();
-		prov.add(createStatement(prov.createResource(uri), prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + "Entity")));
-		tracker.log("Entity created with URI " + uri);
-		return uri;
+		return createEntity(this.generateUri());
 	}
 	
 	/**
@@ -61,9 +58,7 @@ public class ProvenanceBundle {
 	 */
 	public String createEntity(String uri)
 	{
-		prov.add(createStatement(prov.createResource(uri), prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + "Entity")));
-		tracker.log("Entity created with URI " + uri);
-		return uri;
+		return add(uri, "Entity");
 	}
 	
 	/**
@@ -73,10 +68,7 @@ public class ProvenanceBundle {
 	 */
 	public String createActivity()
 	{
-		String uri = NAMESPACE + UUID.randomUUID();
-		prov.add(createStatement(prov.createResource(uri), prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + "Activity")));
-		tracker.log("Activity created with URI " + uri);
-		return uri;
+		return createActivity(generateUri());
 	}
 	
 	/** Add an existing activity to prov model
@@ -86,9 +78,7 @@ public class ProvenanceBundle {
 	 */
 	public String createActivity(String uri)
 	{
-		prov.add(createStatement(prov.createResource(uri), prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + "Activity")));
-		tracker.log("Activity created with URI " + uri);
-		return uri;
+		return add(uri, "Activity");
 	}
 	
 	/**
@@ -98,10 +88,7 @@ public class ProvenanceBundle {
 	 */
 	public String createAgent()
 	{
-		String uri = NAMESPACE + UUID.randomUUID();
-		prov.add(createStatement(prov.createResource(uri), prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + "Agent")));
-		tracker.log("Activity created with URI " + uri);
-		return uri;
+		return createAgent(generateUri());
 	}
 	
 	/**
@@ -111,16 +98,65 @@ public class ProvenanceBundle {
 	 */
 	public String createAgent(String uri)
 	{
-		prov.add(createStatement(prov.createResource(uri), prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + "Agent")));
-		tracker.log("Activity created with URI " + uri);
-		return uri;
+		return add(uri, "Agent");
 	}
 	
+	public String add(String uri, String type)
+	{
+		prov.add(createStatement(prov.createResource(uri), prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + type)));
+		tracker.log(type + " created with URI " + uri);
+		return uri;		
+	}
+	
+	/**
+	 * Query the model for the resource with a given URI
+	 * 
+	 * @param uri The URI of the resource
+	 * @return The resource
+	 */
+	public Resource get(String uri)
+	{
+		
+		
+		tracker.log("");
+		return null;
+	}
+	
+	/**
+	 * Add statement describing agent1 acting on behalf of another
+	 * 
+	 * @param agent1 The agent associated with an activity
+	 * @param agent2 The agent acted on behalf of
+	 * @return boolean indicating success
+	 */
+	public boolean addActedOnBehalfOfStatement(String agent1, String agent2)
+	{
+		return false;
+	}
+	
+	public String generateUri()
+	{
+		return namespace + UUID.randomUUID();
+	}
+	
+	/**
+	 * Write the provenance model to the given OutputStream
+	 * 
+	 * @param out The OutputStream to write the model to
+	 */
 	public void write(OutputStream out)
 	{
 		prov.write(out);
 	}
 	
+	/**
+	 * Create a JENA statement
+	 *  
+	 * @param subject The subject
+	 * @param predicate The predicate
+	 * @param object The object
+	 * @return The statement
+	 */
 	private Statement createStatement(Resource subject, Property predicate, Resource object)
 	{
 		Statement stmt = prov.createStatement(subject, predicate, object);
