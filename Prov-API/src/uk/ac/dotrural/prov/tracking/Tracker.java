@@ -13,4 +13,9 @@ public class Tracker {
 		System.out.println(msg);
 	}
 	
+	public void error(String msg)
+	{
+		System.err.println(msg);
+	}
+	
 }
