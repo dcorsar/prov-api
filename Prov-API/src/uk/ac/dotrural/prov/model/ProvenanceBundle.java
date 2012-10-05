@@ -94,13 +94,10 @@ public class ProvenanceBundle {
 	 */
 	public boolean addActedOnBehalfOf(Resource agent1, Resource agent2)
 	{
-		if(checkType(agent1, "Agent"))
+		if(checkType(agent1, "Agent") && checkType(agent2, "Agent"))
 		{
-			if(checkType(agent2, "Agent"))
-			{
-				add(agent1, prov.createProperty(PROV_NS + "actedOnBehalfOf"), agent2);
-				return true;				
-			}
+			add(agent1, prov.createProperty(PROV_NS + "actedOnBehalfOf"), agent2);
+			return true;				
 		}
 		return false;
 	}
