@@ -1,5 +1,7 @@
 package uk.ac.dotrural.prov.test;
 
+import com.hp.hpl.jena.ontology.OntModel;
+
 import uk.ac.dotrural.prov.model.ProvenanceBundle;
 
 public class Test {
@@ -24,19 +26,20 @@ public class Test {
 		
 		System.out.println("");
 
-		prov.addEndedAtTime("http://dotrural.ac.uk/TestActivity1", (System.currentTimeMillis()/1000));
-		prov.addActedOnBehalfOf("http://dotrural.ac.uk/TestAgent1", "http://dotrural.ac.uk/TestAgent2");
-		prov.addStartedAtTime("http://dotrural.ac.uk/TestActivity1", (System.currentTimeMillis()/1000));
-		prov.addWasAssociatedWith("http://dotrural.ac.uk/TestActivity1", "http://dotrural.ac.uk/TestAgent1");
-		prov.addUsed("http://dotrural.ac.uk/TestActivity1", "http://dotrural.ac.uk/TestEntity1");
-		prov.addWasAttributedTo("http://dotrural.ac.uk/TestEntity1", "http://dotrural.ac.uk/TestAgent1");
-		prov.addWasDerivedFrom("http://dotrural.ac.uk/TestEntity2", "http://dotrural.ac.uk/TestEntity1");
-		prov.addWasGeneratedBy("http://dotrural.ac.uk/TestEntity2", "http://dotrural.ac.uk/TestActivity1");
-		prov.addWasInformedBy("http://dotrural.ac.uk/TestActivity1", "http://dotrural.ac.uk/TestActivity2");
+		prov.addActedOnBehalfOf(prov.getResource("http://dotrural.ac.uk/TestAgent1"), prov.getResource("http://dotrural.ac.uk/TestAgent2"));
+		prov.addEndedAtTime(prov.getResource("http://dotrural.ac.uk/TestActivity1"), (System.currentTimeMillis()/1000));
+		prov.addStartedAtTime(prov.getResource("http://dotrural.ac.uk/TestActivity1"), (System.currentTimeMillis()/1000));
+		prov.addUsed(prov.getResource("http://dotrural.ac.uk/TestActivity1"), prov.getResource("http://dotrural.ac.uk/TestEntity1"));
+		prov.addWasAssociatedWith(prov.getResource("http://dotrural.ac.uk/TestActivity1"), prov.getResource("http://dotrural.ac.uk/TestAgent1"));
+		prov.addWasAttributedTo(prov.getResource("http://dotrural.ac.uk/TestEntity1"), prov.getResource("http://dotrural.ac.uk/TestAgent1"));
+		prov.addWasDerivedFrom(prov.getResource("http://dotrural.ac.uk/TestEntity2"), prov.getResource("http://dotrural.ac.uk/TestEntity1"));
+		prov.addWasGeneratedBy(prov.getResource("http://dotrural.ac.uk/TestEntity1"), prov.getResource("http://dotrural.ac.uk/TestActivity1"));
+		prov.addWasInformedBy(prov.getResource("http://dotrural.ac.uk/TestActivity1"), prov.getResource("http://dotrural.ac.uk/TestActivity2"));
 		
 		System.out.println("");
 		
-		prov.write(System.out);
+		OntModel model = prov.getModel();
+		model.write(System.out);
 		
 		System.out.println("\nFinished...");
 	}

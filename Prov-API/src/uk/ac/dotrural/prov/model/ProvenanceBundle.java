@@ -82,12 +82,26 @@ public class ProvenanceBundle {
 	 */
 	public boolean addActedOnBehalfOf(String agent1, String agent2)
 	{
-		if(checkType(agent1, "Agent") && checkType(agent2, "Agent"))
+		return addActedOnBehalfOf(prov.createResource(agent1), prov.createResource(agent2));
+	}
+	
+	/**
+	 * Add statement describing agent1 acting on behalf of another
+	 * 
+	 * @param agent1 Agent resource
+	 * @param agent2 Agent resource
+	 * @return boolean indicating success
+	 */
+	public boolean addActedOnBehalfOf(Resource agent1, Resource agent2)
+	{
+		if(checkType(agent1, "Agent"))
 		{
-			add(prov.createResource(agent1), prov.createProperty(PROV_NS + "actedOnBehalfOf"), prov.createResource(agent2));
-			return true;
+			if(checkType(agent2, "Agent"))
+			{
+				add(agent1, prov.createProperty(PROV_NS + "actedOnBehalfOf"), agent2);
+				return true;				
+			}
 		}
-		tracker.error("Both arguments must be of type Agent");
 		return false;
 	}
 
@@ -100,12 +114,22 @@ public class ProvenanceBundle {
 	 */
 	public boolean addEndedAtTime(String activity, long timestamp)
 	{
+		return addEndedAtTime(prov.createResource(activity), timestamp);
+	}
+	
+	/**
+	 * Add statement describing when an activity ended
+	 * 
+	 * @param activity The activity that ended at timestamp
+	 * @param timestamp The time at which activity ended
+	 * @return boolean indicating success
+	 */
+	public boolean addEndedAtTime(Resource activity, long timestamp)
+	{
 		if(checkType(activity, "Activity"))
 		{
-			add(prov.createResource(activity), prov.createProperty(PROV_NS + "endedAtTime"), prov.createTypedLiteral(timestamp));
-			return true;
+			add(activity, prov.createProperty(PROV_NS + "endedAtTime"), prov.createTypedLiteral(timestamp));
 		}
-		tracker.error(activity + " is not of type Activity");
 		return false;
 	}
 
@@ -118,13 +142,24 @@ public class ProvenanceBundle {
 	 */
 	public boolean addStartedAtTime(String activity, long timestamp)
 	{
+		return addStartedAtTime(prov.createResource(activity), timestamp);
+	}
+	
+	/**
+	 * Add statement describing when an activity started
+	 * 
+	 * @param activity The activity that started at timestamp
+	 * @param timestamp The time at which activity started
+	 * @return boolean indicating success
+	 */
+	public boolean addStartedAtTime(Resource activity, long timestamp)
+	{
 		if(checkType(activity, "Activity"))
 		{
-			add(prov.createResource(activity), prov.createProperty(PROV_NS + "startedAtTime"), prov.createTypedLiteral(timestamp));
+			add(activity, prov.createProperty(PROV_NS + "startedAtTime"), prov.createTypedLiteral(timestamp));
 			return true;
 		}
-		tracker.error(activity + " is not of type Activity");
-		return false;
+		return false;		
 	}
 
 	/**
@@ -136,21 +171,22 @@ public class ProvenanceBundle {
 	 */
 	public boolean addUsed(String activity, String entity)
 	{
-		if(checkType(activity, "Activity"))
+		return addUsed(prov.createResource(activity), prov.createResource(entity));
+	}
+	
+	/**
+	 * Add statement describing an entity used in an activity
+	 * 
+	 * @param activity The activity that used entity
+	 * @param entity The entity used  by activity
+	 * @return boolean indicating success
+	 */
+	public boolean addUsed(Resource activity, Resource entity)
+	{
+		if(checkType(activity, "Activity") && checkType(entity, "Entity"))
 		{
-			if(checkType(entity, "Entity"))
-			{
-				add(prov.createResource(activity), prov.createProperty(PROV_NS + "used"), prov.createResource(entity));
-				return true;
-			}
-			else
-			{
-				tracker.error(entity + " is not an entity");
-			}
-		}
-		else
-		{
-			tracker.error(activity + " is not an activity");
+			add(activity, prov.createProperty(PROV_NS + "used"), entity);
+			return true;
 		}
 		return false;
 	}
@@ -163,25 +199,25 @@ public class ProvenanceBundle {
 	 */
 	public boolean addWasAssociatedWith(String activity, String agent)
 	{
-		if(checkType(activity, "Activity"))
+		return addWasAssociatedWith(prov.createResource(activity), prov.createResource(agent));
+	}
+
+	/**
+	 * Add statement describing the association between an activity and agent
+	 * @param activity The activity associated with an agent
+	 * @param agent The agent associated with the activity
+	 * @return boolean indicating success
+	 */
+	public boolean addWasAssociatedWith(Resource activity, Resource agent)
+	{
+		if(checkType(activity, "Activity") && checkType(agent, "Agent"))
 		{
-			if(checkType(agent, "Agent"))
-			{
-				add(prov.createResource(activity), prov.createProperty(PROV_NS + "wasAssociatedWith"), prov.createResource(agent));
-				return true;
-			}
-			else
-			{
-				tracker.error(agent + " is not an Agent");
-			}
-		}
-		else
-		{
-			tracker.error(activity + " is not an activity");
+			add(activity, prov.createProperty(PROV_NS + "wasAssociatedWith"), agent);
+			return true;
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Add a statement describing the agent an entity is attributed to
 	 * 
@@ -191,21 +227,22 @@ public class ProvenanceBundle {
 	 */
 	public boolean addWasAttributedTo(String entity, String agent)
 	{
-		if(checkType(entity, "Entity"))
+		return addWasAttributedTo(prov.createResource(entity), prov.createResource(agent));
+	}
+	
+	/**
+	 * Add a statement describing the agent an entity is attributed to
+	 * 
+	 * @param entity The entity attributed to agent
+	 * @param agent The agent entity is attributed to
+	 * @return boolean indicating success
+	 */
+	public boolean addWasAttributedTo(Resource entity, Resource agent)
+	{
+		if(checkType(entity, "Entity") && checkType(agent, "Agent"))
 		{
-			if(checkType(agent, "Agent"))
-			{
-				add(prov.createResource(entity), prov.createProperty(PROV_NS + "wasAttributedTo"), prov.createResource(agent));
-				return true;
-			}
-			else
-			{
-				tracker.error(agent + " is not an agent");
-			}
-		}
-		else
-		{
-			tracker.error(entity + " is not an entity");
+			add(entity, prov.createProperty(PROV_NS + "wasAttributedTo"), agent);
+			return true;
 		}
 		return false;
 	}
@@ -219,14 +256,21 @@ public class ProvenanceBundle {
 	 */
 	public boolean addWasDerivedFrom(String entity1, String entity2)
 	{
+		return addWasDerivedFrom(prov.createResource(entity1), prov.createResource(entity2));
+	}
+	
+	/**
+	 * Add a statement describing entity1 being derived from entity2
+	 * 
+	 * @param entity1 The entity derived from entity2
+	 * @param entity2 The entity used to derive entity1
+	 * @return boolean indicating success
+	 */
+	public boolean addWasDerivedFrom(Resource entity1, Resource entity2)
+	{
 		if(checkType(entity1, "Entity") && checkType(entity2, "Entity"))
 		{
-			add(prov.createResource(entity1), prov.createProperty(PROV_NS + "wasDerivedFrom"), prov.createResource(entity2));
-			return true;
-		}
-		else
-		{
-			tracker.error("Both arguments must be entities");
+			add(entity1, prov.createProperty(PROV_NS + "wasDerivedFrom"), entity2);
 		}
 		return false;
 	}
@@ -240,21 +284,22 @@ public class ProvenanceBundle {
 	  */
 	public boolean addWasGeneratedBy(String entity, String activity)
 	{
-		if(checkType(entity, "Entity"))
+		return addWasGeneratedBy(prov.createResource(entity), prov.createResource(activity));
+	}
+	
+	/**
+	  * Add a statement describing entity being generated by activity
+	  * 
+	  * @param entity The entity generated by activity
+	  * @param activity The activity that generated entity
+	  * @return
+	  */
+	public boolean addWasGeneratedBy(Resource entity, Resource activity)
+	{
+		if(checkType(entity, "Entity") && checkType(activity, "Activity"))
 		{
-			if(checkType(activity, "Activity"))
-			{
-				add(prov.createResource(entity), prov.createProperty(PROV_NS + "wasGeneratedBy"), prov.createResource(activity));
-				return true;
-			}
-			else
-			{
-				tracker.error(activity + " is not an Activity");
-			}
-		}
-		else
-		{
-			tracker.error(entity + " is not an Entity");
+			add(entity, prov.createProperty(PROV_NS + "wasGeneratedBy"), activity);
+			return true;
 		}
 		return false;
 	}
@@ -267,9 +312,20 @@ public class ProvenanceBundle {
 	 */
 	public boolean addWasInformedBy(String activity1, String activity2)
 	{
+		return addWasInformedBy(prov.createResource(activity1), prov.createResource(activity2));
+	}
+	
+	/**
+	 * Add a statement describing an activity being informed by another activity 
+	 * @param activity1
+	 * @param activity2
+	 * @return boolean indicating success
+	 */
+	public boolean addWasInformedBy(Resource activity1, Resource activity2)
+	{
 		if(checkType(activity1, "Activity") && checkType(activity2, "Activity"))
 		{
-			add(prov.createResource(activity1), prov.createProperty(PROV_NS + "wasInformedBy"), prov.createProperty(activity2));
+			add(activity1, prov.createProperty(PROV_NS + "wasInformedBy"), activity2);
 		}
 		else
 		{
@@ -277,17 +333,21 @@ public class ProvenanceBundle {
 		}
 		return false;
 	}
-
+	
 	/**
-	 * Query the model for the resource with a given URI
+	 * Check the type of the given Resource
 	 * 
-	 * @param uri The URI of the resource
-	 * @return The resource
+	 * @param r The resource to type check
+	 * @param type String describing the type of resource
+	 * @return boolean indicating success
 	 */
-	private boolean checkType(String uri, String type)
+	private boolean checkType(Resource r, String type)
 	{
-		tracker.log(uri + " was accessed at " + (System.currentTimeMillis() / 1000));
-		return prov.contains(createStatement(prov.createResource(uri), prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + type)));
+		tracker.log(r.getURI() + " was accessed at " + (System.currentTimeMillis() / 1000));
+		boolean success = prov.contains(createStatement(r, prov.createProperty(RDF_NS + "type"), prov.createResource(PROV_NS + type)));
+		if(!success)
+			tracker.error(r.getURI() + " is not of type " + type);
+		return success;
 	}
 
 	/**
@@ -362,7 +422,7 @@ public class ProvenanceBundle {
 	private Statement createStatement(Resource subject, Property predicate, Resource object)
 	{
 		Statement stmt = prov.createStatement(subject, predicate, object);
-		tracker.log("Statement created " + subject.getLocalName() + " " + predicate.getLocalName() + " " + object.getLocalName());
+		//tracker.log("Statement created " + subject.getLocalName() + " " + predicate.getLocalName() + " " + object.getLocalName());
 		return stmt;
 	}
 
@@ -377,7 +437,7 @@ public class ProvenanceBundle {
 	private Statement createStatement(Resource subject, Property predicate, Literal object)
 	{
 		Statement stmt = prov.createStatement(subject, predicate, object);
-		tracker.log("Statement created " + subject.getLocalName() + " " + predicate.getLocalName() + " " + object.getValue());
+		//tracker.log("Statement created " + subject.getLocalName() + " " + predicate.getLocalName() + " " + object.getValue());
 		return stmt;
 	}
 
@@ -389,6 +449,27 @@ public class ProvenanceBundle {
 	private String generateUri()
 	{
 		return namespace + UUID.randomUUID();
+	}
+	
+	/**
+	 * Get the entire OntModel
+	 * 
+	 * @return OntModel
+	 */
+	public OntModel getModel()
+	{
+		return prov;
+	}
+	
+	/**
+	 * Get/create a resource from the model
+	 *  
+	 * @param uri The URI of the resource
+	 * @return The resource
+	 */
+	public Resource getResource(String uri)
+	{
+		return prov.createResource(uri);
 	}
 	
 	/**
