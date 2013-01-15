@@ -1,4 +1,4 @@
-package uk.ac.dotrural.prov.tracking;
+package uk.ac.dotrural.prov.jena;
 
 /**
  * Class for logging provenance assertions and retractions

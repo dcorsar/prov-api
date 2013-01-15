@@ -1,9 +1,10 @@
-package uk.ac.dotrural.prov.model;
+package uk.ac.dotrural.prov.jena;
 
 import java.io.OutputStream;
 import java.util.UUID;
 
-import uk.ac.dotrural.prov.tracking.Tracker;
+import uk.ac.dotrural.prov.ProvenanceBuilder;
+import uk.ac.dotrural.prov.jena.Tracker;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntModelSpec;
@@ -20,7 +21,7 @@ import com.hp.hpl.jena.rdf.model.Statement;
  * @author Chris Baillie
  */
 
-public class ProvenanceBundle {
+public class ProvenanceBundle implements ProvenanceBuilder{
 	
 	private OntModel prov;
 	private String namespace;
