@@ -13,20 +13,31 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.UUID;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.ReadableInstant;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 import uk.ac.dotrural.prov.ProvO;
 import uk.ac.dotrural.prov.ProvenanceBuilder;
 
 /**
+ * Implementation of {@link ProvenanceBuilder} using SPARQL insert queries
+ * 
  * @author David Corsar Copywrite David Corsar
  * 
  */
 public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 
-	private static final String RDF_TYPE = "ttp://www.w3.org/1999/02/22-rdf-syntax-ns#type";
-	
+	private static final String RDF_TYPE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+
+	public static final DateTimeFormatter XML_DATE_TIME_FORMAT = ISODateTimeFormat
+			.dateTimeNoMillis();
+
 	private Collection<String> updates;
 	private String ns;
-	
+
 	public ProvSparqlUpdateBuilder(String ns) {
 		super();
 		this.ns = ns;
@@ -52,7 +63,7 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .lang.String, java.lang.String)
 	 */
 	public boolean addActedOnBehalfOf(String agent1Uri, String agent2Uri) {
-		addUpdate(agent1Uri, ProvO.actedOnBehalfOf, agent2Uri);
+		addUriUpdate(agent1Uri, ProvO.actedOnBehalfOf, agent2Uri);
 		return true;
 	}
 
@@ -64,8 +75,14 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .String, long)
 	 */
 	public boolean addEndedAtTime(String activityUri, long timestamp) {
-		addUpdate(activityUri, ProvO.endedAtTime, "\"" + timestamp
-				+ "\"^^http://www.w3.org/2001/XMLSchema#dateTime");	return true;
+		addLiteralUpdate(activityUri, ProvO.endedAtTime, "\""
+				+ toXsdDateTime(timestamp)
+				+ "\"^^<http://www.w3.org/2001/XMLSchema#dateTime>");
+		return true;
+	}
+
+	private String toXsdDateTime(long timestamp) {
+		return XML_DATE_TIME_FORMAT.print(timestamp);
 	}
 
 	/*
@@ -76,8 +93,10 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * lang.String, long)
 	 */
 	public boolean addStartedAtTime(String activityUri, long timestamp) {
-		addUpdate(activityUri, ProvO.startedAtTime, "\"" + timestamp
-				+ "\"^^http://www.w3.org/2001/XMLSchema#dateTime");	return true;
+		addLiteralUpdate(activityUri, ProvO.startedAtTime, "\""
+				+ toXsdDateTime(timestamp)
+				+ "\"^^<http://www.w3.org/2001/XMLSchema#dateTime>");
+		return true;
 	}
 
 	/*
@@ -88,7 +107,8 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * java.lang.String)
 	 */
 	public boolean addUsed(String activityUri, String entityUri) {
-		addUpdate(activityUri, ProvO.used, entityUri);	return true;
+		addUriUpdate(activityUri, ProvO.used, entityUri);
+		return true;
 	}
 
 	/*
@@ -99,7 +119,8 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .lang.String, java.lang.String)
 	 */
 	public boolean addWasAssociatedWith(String activityUri, String agentUri) {
-		addUpdate(activityUri, ProvO.wasAssociatedWith, agentUri);	return true;
+		addUriUpdate(activityUri, ProvO.wasAssociatedWith, agentUri);
+		return true;
 	}
 
 	/*
@@ -110,7 +131,8 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .lang.String, java.lang.String)
 	 */
 	public boolean addWasAttributedTo(String entityUri, String agentUri) {
-		addUpdate(entityUri, ProvO.wasAttributedTo, agentUri);	return true;
+		addUriUpdate(entityUri, ProvO.wasAttributedTo, agentUri);
+		return true;
 	}
 
 	/*
@@ -121,7 +143,8 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .lang.String, java.lang.String)
 	 */
 	public boolean addWasDerivedFrom(String entity1Uri, String entity2Uri) {
-		addUpdate(entity1Uri, ProvO.wasDerivedFrom, entity2Uri);	return true;
+		addUriUpdate(entity1Uri, ProvO.wasDerivedFrom, entity2Uri);
+		return true;
 	}
 
 	/*
@@ -132,7 +155,8 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .lang.String, java.lang.String)
 	 */
 	public boolean addWasGeneratedBy(String entityUri, String activityUri) {
-		addUpdate(entityUri, ProvO.wasGeneratedBy, activityUri);	return true;
+		addUriUpdate(entityUri, ProvO.wasGeneratedBy, activityUri);
+		return true;
 	}
 
 	/*
@@ -143,7 +167,8 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * lang.String, java.lang.String)
 	 */
 	public boolean addWasInformedBy(String activity1Uri, String activity2Uri) {
-		addUpdate(activity1Uri, ProvO.wasInformedBy, activity2Uri);	return true;
+		addUriUpdate(activity1Uri, ProvO.wasInformedBy, activity2Uri);
+		return true;
 	}
 
 	/*
@@ -154,7 +179,8 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .String)
 	 */
 	public String createActivity(String uri) {
-		addUpdate(uri, RDF_TYPE, ProvO.Activity);	return uri;
+		addUriUpdate(uri, RDF_TYPE, ProvO.Activity);
+		return uri;
 	}
 
 	/*
@@ -165,7 +191,8 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * String)
 	 */
 	public String createAgent(String uri) {
-		addUpdate(uri, RDF_TYPE, ProvO.Agent);	return uri;
+		addUriUpdate(uri, RDF_TYPE, ProvO.Agent);
+		return uri;
 	}
 
 	/*
@@ -176,11 +203,17 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .String)
 	 */
 	public String createEntity(String uri) {
-		addUpdate(uri, RDF_TYPE, ProvO.Entity);	return uri;
+		addUriUpdate(uri, RDF_TYPE, ProvO.Entity);
+		return uri;
 	}
 
-	private void addUpdate(String s, String p, String o) {
-		this.updates.add(String.format("INSERT {<%s> <%s> <%s>.}", s, p, o));
+	private void addUriUpdate(String s, String p, String o) {
+		this.updates.add(String
+				.format("INSERT DATA {<%s> <%s> <%s>.}", s, p, o));
+	}
+
+	private void addLiteralUpdate(String s, String p, String o) {
+		this.updates.add(String.format("INSERT DATA {<%s> <%s> %s.}", s, p, o));
 	}
 
 	public String createActivity() {
@@ -200,16 +233,14 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 		createEntity(uri);
 		return uri;
 	}
-	
+
 	/**
 	 * Generate a URI containing a UUID
 	 * 
 	 * @return The new unique URI
 	 */
-	private String generateUri()
-	{
+	private String generateUri() {
 		return this.ns + UUID.randomUUID();
 	}
-	 
 
 }

@@ -2,7 +2,7 @@ package uk.ac.dotrural.prov;
 
 public class ProvO {
 
-	public static final String ns=" http://www.w3.org/ns/prov#";
+	public static final String ns= "http://www.w3.org/ns/prov#";
 	public static final String actedOnBehalfOf = ns+"actedOnBehalfOf";
 	public static final String endedAtTime = ns+"endedAtTime";
 	public static final String startedAtTime = ns+"startedAtTime";
