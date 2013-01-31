@@ -22,6 +22,8 @@ import uk.ac.dotrural.prov.ProvenanceBuilder;
  */
 public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 
+	private static final String RDF_TYPE = "ttp://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+	
 	private Collection<String> updates;
 	private String ns;
 	
@@ -152,7 +154,7 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .String)
 	 */
 	public String createActivity(String uri) {
-		addUpdate(uri, "a", ProvO.Activity);	return uri;
+		addUpdate(uri, RDF_TYPE, ProvO.Activity);	return uri;
 	}
 
 	/*
@@ -163,7 +165,7 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * String)
 	 */
 	public String createAgent(String uri) {
-		addUpdate(uri, "a", ProvO.Agent);	return uri;
+		addUpdate(uri, RDF_TYPE, ProvO.Agent);	return uri;
 	}
 
 	/*
@@ -174,11 +176,11 @@ public class ProvSparqlUpdateBuilder implements ProvenanceBuilder {
 	 * .String)
 	 */
 	public String createEntity(String uri) {
-		addUpdate(uri, "a", ProvO.Entity);	return uri;
+		addUpdate(uri, RDF_TYPE, ProvO.Entity);	return uri;
 	}
 
 	private void addUpdate(String s, String p, String o) {
-		this.updates.add(String.format("INSERT {%s %s %s.}", s, p, o));
+		this.updates.add(String.format("INSERT {<%s> <%s> <%s>.}", s, p, o));
 	}
 
 	public String createActivity() {
