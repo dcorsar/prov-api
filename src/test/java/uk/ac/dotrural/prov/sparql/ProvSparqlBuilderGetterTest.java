@@ -2,9 +2,7 @@ package uk.ac.dotrural.prov.sparql;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -12,8 +10,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.dotrural.prov.ProvO;
-import uk.ac.dotrural.prov.ProvenanceBuilder;
 import uk.ac.dotrural.prov.ProvenanceGetter;
 
 /**
@@ -23,7 +19,7 @@ import uk.ac.dotrural.prov.ProvenanceGetter;
  * @author David Corsar
  * 
  */
-public class ProvSparqlBuilderGetterTest {
+public class ProvSparqlBuilderGetterTest{
 
 	private JenaSparqlUtils utils;
 	private ProvenanceGetter getter;

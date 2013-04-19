@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite failures="0" time="1.034" errors="0" skipped="0" tests="9" name="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Libraries"/>
+    <property name="java.vm.version" value="20.14-b01-447"/>
+    <property name="awt.nativeDoubleBuffering" value="true"/>
+    <property name="gopherProxySet" value="false"/>
+    <property name="mrj.build" value="11M4203"/>
+    <property name="java.vm.vendor" value="Apple Inc."/>
+    <property name="java.vendor.url" value="http://www.apple.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/Users/david/Programming/prov-api"/>
+    <property name="java.runtime.version" value="1.6.0_43-b01-447-11M4203"/>
+    <property name="java.awt.graphicsenv" value="apple.awt.CGraphicsEnvironment"/>
+    <property name="basedir" value="/Users/david/Programming/prov-api"/>
+    <property name="java.endorsed.dirs" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/endorsed"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="surefire.real.class.path" value="/Users/david/Programming/prov-api/target/surefire/surefirebooter2473373763122027728.jar"/>
+    <property name="java.io.tmpdir" value="/var/folders/8x/g49vkc592bs0ph12_bgbsmt80000gp/T/"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="sun.jnu.encoding" value="MacRoman"/>
+    <property name="java.library.path" value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
+    <property name="http.proxyPort" value="8080"/>
+    <property name="surefire.test.class.path" value="/Users/david/Programming/prov-api/target/test-classes:/Users/david/Programming/prov-api/target/classes:/Users/david/.m2/repository/org/apache/jena/jena-arq/2.10.0/jena-arq-2.10.0.jar:/Users/david/.m2/repository/org/apache/jena/jena-core/2.10.0/jena-core-2.10.0.jar:/Users/david/.m2/repository/org/apache/jena/jena-iri/0.9.5/jena-iri-0.9.5.jar:/Users/david/.m2/repository/xerces/xercesImpl/2.10.0/xercesImpl-2.10.0.jar:/Users/david/.m2/repository/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar:/Users/david/.m2/repository/org/apache/httpcomponents/httpclient/4.2.3/httpclient-4.2.3.jar:/Users/david/.m2/repository/org/apache/httpcomponents/httpcore/4.2.2/httpcore-4.2.2.jar:/Users/david/.m2/repository/commons-codec/commons-codec/1.6/commons-codec-1.6.jar:/Users/david/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.4/jcl-over-slf4j-1.6.4.jar:/Users/david/.m2/repository/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar:/Users/david/.m2/repository/org/slf4j/slf4j-log4j12/1.6.4/slf4j-log4j12-1.6.4.jar:/Users/david/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar:/Users/david/.m2/repository/joda-time/joda-time/2.1/joda-time-2.1.jar:/Users/david/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/david/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="50.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.8.3"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16|localhost|*.localhost|127.0.0.1"/>
+    <property name="user.home" value="/Users/david"/>
+    <property name="user.timezone" value="Europe/Dublin"/>
+    <property name="java.awt.printerjob" value="apple.awt.CPrinterJob"/>
+    <property name="java.specification.version" value="1.6"/>
+    <property name="file.encoding" value="MacRoman"/>
+    <property name="user.name" value="david"/>
+    <property name="java.class.path" value="/Users/david/Programming/prov-api/target/test-classes:/Users/david/Programming/prov-api/target/classes:/Users/david/.m2/repository/org/apache/jena/jena-arq/2.10.0/jena-arq-2.10.0.jar:/Users/david/.m2/repository/org/apache/jena/jena-core/2.10.0/jena-core-2.10.0.jar:/Users/david/.m2/repository/org/apache/jena/jena-iri/0.9.5/jena-iri-0.9.5.jar:/Users/david/.m2/repository/xerces/xercesImpl/2.10.0/xercesImpl-2.10.0.jar:/Users/david/.m2/repository/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar:/Users/david/.m2/repository/org/apache/httpcomponents/httpclient/4.2.3/httpclient-4.2.3.jar:/Users/david/.m2/repository/org/apache/httpcomponents/httpcore/4.2.2/httpcore-4.2.2.jar:/Users/david/.m2/repository/commons-codec/commons-codec/1.6/commons-codec-1.6.jar:/Users/david/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.4/jcl-over-slf4j-1.6.4.jar:/Users/david/.m2/repository/org/slf4j/slf4j-api/1.6.4/slf4j-api-1.6.4.jar:/Users/david/.m2/repository/org/slf4j/slf4j-log4j12/1.6.4/slf4j-log4j12-1.6.4.jar:/Users/david/.m2/repository/log4j/log4j/1.2.16/log4j-1.2.16.jar:/Users/david/.m2/repository/joda-time/joda-time/2.1/joda-time-2.1.jar:/Users/david/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/david/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="java.vm.specification.version" value="1.0"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home"/>
+    <property name="sun.java.command" value="/Users/david/Programming/prov-api/target/surefire/surefirebooter2473373763122027728.jar /Users/david/Programming/prov-api/target/surefire/surefire2664850838974010433tmp /Users/david/Programming/prov-api/target/surefire/surefire2310110144989049674tmp"/>
+    <property name="java.specification.vendor" value="Sun Microsystems Inc."/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="apple.awt.CToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.6.0_43"/>
+    <property name="java.ext.dirs" value="/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib/ext"/>
+    <property name="http.proxyHost" value="proxy.abdn.ac.uk"/>
+    <property name="sun.boot.class.path" value="/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar"/>
+    <property name="java.vendor" value="Apple Inc."/>
+    <property name="localRepository" value="/Users/david/.m2/repository"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.apple.com/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="mrj.version" value="1070.1.6.0_43-447"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16|localhost|*.localhost|127.0.0.1"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16|localhost|*.localhost|127.0.0.1"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase time="0.953" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testStartedAtTime"/>
+  <testcase time="0.004" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testEndedAtTime"/>
+  <testcase time="0.003" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testWasInformedBy"/>
+  <testcase time="0.004" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testWasAssociatedWith"/>
+  <testcase time="0.003" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testUsed"/>
+  <testcase time="0.005" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testActedOnBehalfOf"/>
+  <testcase time="0.003" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testWasGeneratedBy"/>
+  <testcase time="0.003" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testWasDerivedFrom"/>
+  <testcase time="0.003" classname="uk.ac.dotrural.prov.sparql.ProvSparqlBuilderGetterTest" name="testWasAttributedTo"/>
+</testsuite>
