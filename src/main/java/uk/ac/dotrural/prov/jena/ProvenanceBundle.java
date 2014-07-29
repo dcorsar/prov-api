@@ -333,6 +333,64 @@ public class ProvenanceBundle implements ProvenanceBuilder{
 	}
 	
 	/**
+	 * Add a statement describing an entity being assigned to another entity
+	 * @author anitacao
+	 * @param entity1
+	 * @param entity2
+	 * @return 
+	 */
+	public boolean addWasAssignedTo(String entity1, String entity2)
+	{
+		return addWasGeneratedBy(prov.createResource(entity1), prov.createResource(entity2));
+	}
+	
+	/**
+	 * Add a statement describing an entity being assigned to another entity
+	 * @author anitacao
+	 * @param entity1
+	 * @param entity2
+	 * @return boolean indicating success
+	 */
+	public boolean addWasAssignedTo(Resource entity1, Resource entity2)
+	{
+		if(checkType(entity1, "Entity") && checkType(entity2, "Entity"))
+		{
+			add(entity1, prov.createProperty(PROV_NS + "wasAssignedTo"), entity2);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Add a statement describing an activity was started by an agent
+	 * @author anitacao
+	 * @param activity
+	 * @param agent
+	 * @return 
+	 */
+	public boolean addWasStartedBy(String activity, String agent)
+	{
+		return addWasStartedBy(prov.createResource(activity), prov.createResource(agent));
+	}
+	
+	/**
+	 * Add a statement describing an activity was started by an agent
+	 * @author anitacao
+	 * @param activity
+	 * @param agent
+	 * @return boolean indicating success
+	 */
+	public boolean addWasStartedBy(Resource activity, Resource agent)
+	{
+		if(checkType(activity, "Activity") && checkType(agent, "Agent"))
+		{
+			add(activity, prov.createProperty(PROV_NS + "wasStartedBy"), agent);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Check the type of the given Resource
 	 * 
 	 * @param r The resource to type check
