@@ -332,6 +332,66 @@ public class ProvenanceBundle implements ProvenanceBuilder{
 		return false;
 	}
 	
+
+	/**
+	 * Add a statement describing an activity being started by an agent
+	 * @author anitacao
+	 * @param activity
+	 * @param agent
+	 * @return boolean indicating success
+	 */
+	public boolean addWasStartedBy(String activity, String agent)
+	{
+		return addWasStartedBy(prov.createResource(activity), prov.createResource(agent));
+	}
+	
+	/**
+	 * Add a statement describing an activity being started by an agent
+	 * @author anitacao
+	 * @param activity
+	 * @param agent
+	 * @return boolean indicating success
+	 */
+	public boolean addWasStartedBy(Resource activity, Resource agent)
+	{
+		if(checkType(activity, "Activity") && checkType(agent, "Agent"))
+		{
+			add(activity, prov.createProperty(PROV_NS + "wasStartedBy"), agent);
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Add a statement describing an entity being invalidating by an activity
+	 * @author anitacao
+	 * @param entity
+	 * @param activity
+	 * @return boolean indicating success 
+	 */
+	public boolean addWasInvalidatedBy(String entity, String activity)
+	{
+		return addWasInvalidatedBy(prov.createResource(entity),prov.createResource(activity));
+	}
+	
+	/**
+	 * Add a statement describing an entity being invalidating by an activity
+	 * @author anitacao
+	 * @param entity
+	 * @param activity
+	 * @return boolean indicating success 
+	 */
+	public boolean addWasInvalidatedBy(Resource entity, Resource activity)
+	{
+		if(checkType(entity, "Entity") && checkType(activity, "Activity"))
+		{
+			add(entity, prov.createProperty(PROV_NS + "wasInvalidatedBy"), activity);
+			return true;
+		}
+		return false;
+	}
+	
+	
 	/**
 	 * Check the type of the given Resource
 	 * 
